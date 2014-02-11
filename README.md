@@ -50,10 +50,9 @@ public function editAction()
 Support
 -------------------------------------------------------------
 
-If you have an issue, please send me an email "ajaym.synsoft@gmail.com" then if you still need help, open a bug report in GitHub's issue tracker.
+If you have an issue, please send me an email "ajaymishra@synsoftglobal.com" then if you still need help, open a bug report in GitHub's issue tracker.
 
 Contributions
 -------------------------------------------------------------
 
-This extension is developed by synsoft global and his involment is for further code development and design.
-
+This extension is developed by synsoft global and his involvement is for further code development and design.
