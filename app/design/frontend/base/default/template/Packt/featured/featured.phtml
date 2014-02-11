@@ -1,0 +1,83 @@
+<?php if($this->getConfig('enabled')){ // start enable module?>
+	<?php $this->getProducts() ?>
+	<?php $_productCollection=$this->getProductCollection() ?>
+		<?php				
+			$width_slider = $this->getConfig('width_slider');
+			$height_slider = $this->getConfig('height_slider');
+			$items = $this->getConfig('items');
+			$w_item = $width_slider/$items;
+			$qty = $this->getConfig('qty');
+			if ( !$this->getConfig('width_thumbnail') ){
+				$w_thumbnail = 135;
+			} else {
+				$w_thumbnail = $this->getConfig('width_thumbnail');
+			}
+			if( !$this->getConfig('height_thumbnail') ){
+				$h_thumbnail = 135;
+			 }
+			else {
+				$h_thumbnail = $this->getConfig('height_thumbnail');
+			}
+		?>
+	<div class="ma-featured-slider-contain" style="width:<?php echo $width_slider;?>px; height:<?php echo $height_slider; ?>px;"> 
+		<?php if($this->getConfig('title')){?>
+			<div class="ma-featured-sldier-title"><h2><?php echo $this->getConfig('title')?></h2></div>
+		<?php }?>
+		<?php if(!$_productCollection->count()): ?> <!-- start if exist product -->
+			<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+		<?php else: ?>
+			<div id="banner-fade">			
+				<?php $_collectionSize = $_productCollection->count() ?>
+				<?php if( !$this->getConfig('items') ) { $_columnCount = 1 ; } else { $_columnCount = $this->getConfig('items'); }?>
+				<ul id ="ma-featuredpro-slider" class="bjqs" style="height:150px;">
+					
+				<?php $i=1; foreach ($_productCollection as $_product): ?>
+				<?php $_product = Mage::getModel('catalog/product')->load($_product->getId()); ?>
+						<li <?php if($i==1): ?> first<?php elseif($i == $_collectionSize): ?> last<?php endif; ?>"  style="width:<?php echo $w_item; ?>px;">																																																																				              
+							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getImageLabel($_product, 'small_image')) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($w_thumbnail, $h_thumbnail); ?>" width="<?php echo $w_thumbnail?>" height="<?php echo $h_thumbnail?>" alt="<?php echo $this->htmlEscape($this->getImageLabel($_product, 'small_image')) ?>" /></a>
+							<h1 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>"><?php echo $this->htmlEscape($_product->getName()) ?></a></h1>
+							<?php if( $this->getConfig('price') ): ?>
+								<?php echo $this->htmlEscape($_product->getPrice()) ?>
+							<?php endif; ?>
+							<?php $i++; ?>
+							<div class="actions">
+								<?php if ($this->getConfig('addtocart')) { ?>
+									<?php if($_product->isSaleable()): ?>
+										<button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+									<?php else: ?>
+										<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+									<?php endif; ?>
+								<?php }?>
+								<?php if( $this->getConfig('addtowishlist') || $this->getConfig('addtocompare')){?>
+									<ul class="add-to-links">
+										<?php if( $this->getConfig('addtowishlist')){?>
+										<?php if ($this->helper('wishlist')->isAllow()) : ?>
+											<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+										<?php endif; ?>
+										<?php } ?>
+									</ul>
+								<?php } ?>
+							</div>
+						</li>
+					<?php endforeach ?>
+				</ul>				
+			</div>		
+		<?php endif; ?> <!-- end exist product -->
+	</div> <!-- end products list -->
+<?php } ?>
+<script type="text/javascript">
+					jQuery.noConflict();
+				</script>
+				<script type="text/javascript">
+					jQuery(document).ready(function($) {
+					  $('#banner-fade').bjqs({
+						height      : 215,
+						width       : 150,
+						responsive  : true
+					  });
+
+				$('.bjqs-markers').hide();
+				});
+				
+      </script>
+

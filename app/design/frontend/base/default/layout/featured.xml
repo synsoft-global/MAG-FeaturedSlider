@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+		<reference name="head">
+			 <action method="addJs"><script>Featured/js/jquery.noconflict.js</script></action>
+			 <action method="addJs"><script>Featured/js/jquery-1.10.2.min.js</script></action>
+			 <action method="addJs"><script>Featured/js/bjqs-1.3.min.js</script></action>
+              <action method="addCss"><stylesheet>Featured/bjqs.css</stylesheet></action>
+              <action method="addCss"><stylesheet>Featured/demo.css</stylesheet></action>
+      	</reference>
+		<reference name="right">
+			 <remove name="right.permanent.callout" />
+			 <remove name="right.poll" />
+			<block type="featured/featured" name="featured" template="Packt/featured/featured.phtml"/>
+		</reference>
+    </default>
+</layout> 
